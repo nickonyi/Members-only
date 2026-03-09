@@ -8,8 +8,8 @@ function NavBar() {
         <button>Circes</button>
         <button>Post</button>
       </div>
-      <div className="login">
-        <button className="flex gap-2">
+      <div className="login ">
+        <button className="flex gap-2 cursor-pointer hover:bg-gray-100 rounded-lg py-2 px-4">
           <span>
             <LogIn />
           </span>{" "}

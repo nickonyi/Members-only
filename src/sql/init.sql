@@ -75,7 +75,7 @@ BEGIN
   SET members_count = members_count + 1
   WHERE id = NEW.circle_id;
 
-  ELSE IF TG_OP = 'DELETE' THEN
+  ELSIF TG_OP = 'DELETE' THEN
   UPDATE circles
   SET members_count = GREATEST(members_count - 1,0)
   WHERE id = OLD.circle_id;

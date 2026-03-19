@@ -6,15 +6,7 @@
       <p class="text-xs text-gray-500 mt-2">
         Create an account to start exploring circles and connecting.
       </p>
-       <% if (errors) { %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <ul>
-            <% errors.forEach(error => { %>
-              <li><%= error.msg %></li>
-            <% }); %>
-          </ul>
-        </div>
-      <% } %>
+
       <form action="/auth/signup" method="POST" class="flex flex-col gap-2">
         <label for="firstName">
           First Name:
@@ -23,8 +15,11 @@
             name="firstName"
             id="firstName"
             class="border p-2 w-full rounded"
-            value=""
+            value="<%= formData.firstName || '' %>"
           />
+          <% if (errors.firstName) { %>
+            <p class="text-red-500 text-xs italic"><%= errors.firstName %></p>
+          <% } %>
         </label>
         <label for="lastName">
           Last Name:
@@ -33,8 +28,11 @@
             name="lastName"
             id="lastName"
             class="border p-2 w-full rounded"
-            value=""
+            value="<%= formData.lastName || '' %>"
           />
+          <% if (errors.lastName) { %>
+            <p class="text-red-500 text-xs italic"><%= errors.lastName %></p>
+          <% } %>
         </label>
         <label for="email">
           email:
@@ -43,8 +41,11 @@
             name="email"
             id="email"
             class="border p-2 w-full rounded"
-            value=""
+            value="<%= formData.email || '' %>"
           />
+          <% if (errors.email) { %>
+            <p class="text-red-500 text-xs italic"><%= errors.email %></p>
+          <% } %>
         </label>
         <label for="password">
           Password:
@@ -54,6 +55,9 @@
             id="password"
             class="border p-2 w-full rounded"
           />
+          <% if (errors.password) { %>
+            <p class="text-red-500 text-xs italic"><%= errors.password %></p>
+          <% } %>
         </label>
         <label for="confirmPassword">
           Confirm Password:
@@ -63,6 +67,9 @@
             id="confirmPassword"
             class="border p-2 w-full rounded"
           />
+          <% if (errors.confirmPassword) { %>
+            <p class="text-red-500 text-xs italic"><%= errors.confirmPassword %></p>
+          <% } %>
         </label>
         <button
           type="submit"

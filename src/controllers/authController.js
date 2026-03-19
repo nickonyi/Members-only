@@ -21,4 +21,8 @@ export const postSignup = async (req, res, next) => {
       formData: req.body,
     });
   }
+
+  const { firstName, lastName, email, password } = matchedData(req);
+
+  console.log({ firstName, lastName, email, password });
 };

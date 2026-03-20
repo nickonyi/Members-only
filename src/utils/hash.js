@@ -1,8 +1,8 @@
-import { bcrypt } from "bcrypt";
+import bcrypt from "bcrypt";
 
 const SALT_ROUNDS = 10;
 
-export const hashedPassword = async (password) => {
+export const hashPassword = async (password) => {
   if (!password) {
     throw Error("Password is required for hashing");
   }

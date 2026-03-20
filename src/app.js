@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import { globalErrorHandler } from "./middlewares/errorMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import indexRoutes from "./routes/indexRoutes.js";
 dotenv.config();
@@ -20,6 +21,12 @@ app.use(express.static("public"));
 
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
+
+app.use((req, res, next) => {
+  next(new AppError("Page not found", 404, req.originalUrl));
+});
+
+app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
   console.log(`Listening at port:${PORT}`);

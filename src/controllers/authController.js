@@ -1,4 +1,5 @@
 import { matchedData, validationResult } from "express-validator";
+import { registerUser } from "../services/authService.js";
 
 export const getSignup = (req, res) => {
   res.render("signup", { title: "Sign up", errors: {}, formData: {} });
@@ -24,5 +25,8 @@ export const postSignup = async (req, res, next) => {
 
   const { firstName, lastName, email, password } = matchedData(req);
 
-  console.log({ firstName, lastName, email, password });
+  const user = await registerUser({ firstName, lastName, email, password });
+  if (user) {
+    res.send("user successfully logged in!");
+  }
 };

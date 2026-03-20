@@ -1,5 +1,5 @@
-import { createUserInDB } from "../models/usersModel";
-import { hashedPassword } from "../utils/hash";
+import { createUserInDB } from "../models/usersModel.js";
+import { hashPassword } from "../utils/hash.js";
 
 export const registerUser = async ({
   firstName,
@@ -12,8 +12,13 @@ export const registerUser = async ({
   }
 
   try {
-    const hashedPassword = await hashedPassword(password);
+    const hashedPassword = await hashPassword(password);
 
-    return createUserInDB({ firstName, lastName, email, hashedPassword });
-  } catch (error) {}
+    return await createUserInDB({ firstName, lastName, email, hashedPassword });
+  } catch (err) {
+    if (err === "23505") {
+      throw new AppError(`email ${email} is already taken`, 409);
+    }
+    throw err;
+  }
 };

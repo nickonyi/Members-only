@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { globalErrorHandler } from "./middlewares/errorMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import indexRoutes from "./routes/indexRoutes.js";
+import AppError from "./utils/appError.js";
 dotenv.config();
 
 const PORT = process.env.PORT;

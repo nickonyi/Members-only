@@ -6,6 +6,8 @@ import { globalErrorHandler } from "./middlewares/errorMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import AppError from "./utils/appError.js";
+import { sessionMiddleware } from "./middlewares/sessionMiddleware.js";
+import passport from "passport";
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -19,6 +21,10 @@ app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+app.use(sessionMiddleware);
+
+app.use(passport.session());
 
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);

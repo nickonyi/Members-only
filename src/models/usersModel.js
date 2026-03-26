@@ -17,3 +17,6 @@ export const createUserInDB = async ({
 
   return result.rows[0];
 };
+
+export const getUserByUsernameFromDB = async () => {};
+export const getUserByIdFromDB = async () => {};

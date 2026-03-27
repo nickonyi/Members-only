@@ -1,5 +1,24 @@
 import pool from "../db/pool.js";
 
+const generateUsername = (firstName, lastName) => {
+  const randomNum = Math.floor(Math.random() * 10000);
+  return `${firstName}${lastName}${randomNum}`;
+};
+/**
+ * Maps a raw DB user row to app-safe user object
+ */
+
+const mapUser = (row) => {
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    username: generateUsername(row.first_name, row.last_name),
+    passwordHash: row.password,
+    createdAt: row.created_at,
+  };
+};
+
 export const createUserInDB = async ({
   firstName,
   lastName,
@@ -15,8 +34,22 @@ export const createUserInDB = async ({
     [firstName, lastName, email, hashedPassword],
   );
 
-  return result.rows[0];
+  return mapUser(result.rows[0]);
 };
 
-export const getUserByUsernameFromDB = async () => {};
-export const getUserByIdFromDB = async () => {};
+export const getUserByEmailFromDB = async (email) => {
+  const result = await pool.query(
+    `SELECT * FROM users WHERE LOWER(email) = LOWER($1) LIMIT 1`,
+    [email],
+  );
+  return mapUser(result.rows[0]);
+};
+export const getUserByIdFromDB = async (id) => {
+  const result = await pool.query(
+    `
+    SELECT * FROM users WHERE id = $1 LIMIT 1`,
+    [id],
+  );
+
+  return mapUser(result.rows[0]);
+};

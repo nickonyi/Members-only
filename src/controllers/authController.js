@@ -26,7 +26,13 @@ export const postSignup = async (req, res, next) => {
   const { firstName, lastName, email, password } = matchedData(req);
 
   const user = await registerUser({ firstName, lastName, email, password });
-  if (user) {
-    res.send("user successfully logged in!");
-  }
+
+  req.session.regenerate((err) => {
+    if (err) return next(err);
+    console.log(user);
+    req.login(user, (err) => {
+      if (err) return next(err);
+      res.redirect("/");
+    });
+  });
 };

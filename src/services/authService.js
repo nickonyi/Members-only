@@ -32,8 +32,8 @@ export const getUserById = async (id) => {
   return user;
 };
 
-export const validateUser = async (username, password, verifyFn) => {
-  if (!username || !password) return null;
+export const validateUser = async (email, password, verifyFn) => {
+  if (!email || !password) return null;
 
   const user = await getUserByEmailFromDB(email);
 

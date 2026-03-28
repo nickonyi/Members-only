@@ -29,7 +29,7 @@ export const postSignup = async (req, res, next) => {
 
   req.session.regenerate((err) => {
     if (err) return next(err);
-    console.log(user);
+
     req.login(user, (err) => {
       if (err) return next(err);
       res.redirect("/");

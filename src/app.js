@@ -7,7 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import AppError from "./utils/appError.js";
 import { sessionMiddleware } from "./middlewares/sessionMiddleware.js";
-import passport from "passport";
+import passport from "./config/passportConfig.js";
 dotenv.config();
 
 const PORT = process.env.PORT;

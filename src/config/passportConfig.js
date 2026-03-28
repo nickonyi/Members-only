@@ -9,9 +9,9 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
     },
-    async (username, password, done) => {
+    async (email, password, done) => {
       try {
-        const user = await validateUser(username, password, verifyPassword);
+        const user = await validateUser(email, password, verifyPassword);
         if (!user) {
           return done(null, false, {
             message: "Invalid credentials",
@@ -33,7 +33,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await getUserById(id);
-    console.log(user);
 
     if (!user) {
       return done(false, null);

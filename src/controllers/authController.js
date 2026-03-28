@@ -1,5 +1,6 @@
 import { matchedData, validationResult } from "express-validator";
 import { registerUser } from "../services/authService.js";
+import passport from "../config/passportConfig.js";
 
 export const getSignup = (req, res) => {
   res.render("signup", { title: "Sign up", errors: {}, formData: {} });
@@ -32,6 +33,45 @@ export const postSignup = async (req, res, next) => {
 
     req.login(user, (err) => {
       if (err) return next(err);
+      res.redirect("/");
+    });
+  });
+};
+
+export const getLogin = (req, res) => {
+  res.render("login", { title: "login", errors: {}, formData: {} });
+};
+
+export const postLogin = async (req, res, next) => {
+  console.log(req.body);
+
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+
+    console.log(user);
+
+    if (!user) {
+      return res.render("login", {
+        title: "Login",
+        errors: [{ msg: info?.message || "Invalid credentials" }],
+      });
+    }
+
+    req.session.regenerate((err) => {
+      if (err) return next(err);
+
+      const redirectTo = req.query.next || "/";
+      res.redirect(redirectTo);
+    });
+  })(req, res, next);
+};
+
+export const getLogout = (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
       res.redirect("/");
     });
   });

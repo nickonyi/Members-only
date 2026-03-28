@@ -1,0 +1,58 @@
+<%- include('partials/header') %> <%- include('partials/nav') %>
+
+<section class="py-10">
+  <div class="wrapper flex items-center flex-col justify-center">
+    <div class="max-w-xs pt-18">
+      <h1 class="text-2xl font-semibold">
+        Welcome Back
+      </h1>
+
+      <p class="text-neutral-500 mb-6 text-sm">
+        Log in to continue exploring circles and connecting.
+      </p>
+
+      <%if (errors){ %>
+      <% if (errors.length) { %>
+      <ul class="mb-4 text-red-600">
+        <% errors.forEach(function(error) { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+      <% } %>
+      <% } %>
+     
+      <form action="/auth/login" method="POST" class="flex flex-col gap-2">
+        <label for="email">
+          Email:
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="border p-2 w-full rounded"
+          />
+        </label>
+        <label for="password">
+          Password:
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="border p-2 w-full rounded"
+          />
+        </label>
+        <button
+          type="submit"
+          class="border-2 bg-neutral-950 text-white px-3 rounded-lg cursor-pointer text-sm py-2"
+        >
+          Log In
+        </button>
+      </form>
+    </div>
+    <p class="text-neutral-600 text-sm py-12">
+      First time here?
+      <a href="/auth/signup" class="text-black font-semibold"
+        >Create an account</a
+      >
+    </p>
+  </div>
+</section>

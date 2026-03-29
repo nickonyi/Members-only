@@ -39,3 +39,8 @@ export const signUpValidator = [
     .custom((value, { req }) => value === req.body.password)
     .withMessage("Passwords do not match"),
 ];
+
+export const loginValidator = [
+  body("email").trim().notEmpty().withMessage("Email is required"),
+  body("password").notEmpty().withMessage("Password is required"),
+];

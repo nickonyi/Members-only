@@ -10,23 +10,70 @@
     <li><a href="/about">Circle</a></li>
     <li><a href="/contact">Posts</a></li>
   </ul>
-  <div>
-    <a href="/auth/login" class="flex items-center gap-2">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-6 h-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-7.5A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h7.5A2.25 2.25 0 0015.75 18.75V15M18 12l3-3m0 0l-3-3m3 3H9"
-        />
-      </svg>
-      Login
-    </a>
+
+  <!---Right side-->
+  <div class="flex items-center gap-2">
+    <% if(user){%>
+      <div class="relative" id="user-menu-wrapper" >
+        <button id="user-menu-btn"  class="flex items-center gap-1 py-1 px-2 rounded-md hover:bg-neutral-100 transition cursor-pointer">
+            <div class="flex flex-col text-right">
+                <span class="text-sm leading-tight font-medium"><%= user.username %></span>
+                <span class="text-xs leading-tight text-gray-500">User</span>
+            </div>
+
+            <img class="w-8 h-8 rounded-full object-cover border"
+                 src="/images/profile.png"
+                 alt="profile">
+        </button>
+
+        <div id="user-dropdown" class="absolute right-0 mt-2 bg-white shadow-lg rounded-md py-1.5 hidden w-32">
+            <form action="/auth/logout"
+                  method="POST"
+                  class="">
+               <button type="submit"
+                       name="logoutBtn"
+                       class="w-full h-full justify-center cursor-pointer gap-1 text-sm py-1 px-2 hover:bg-neutral-100 transition flex items-center">
+                   <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-7.5A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h7.5A2.25 2.25 0 0015.75 18.75V15M18 12l3-3m0 0l-3-3m3 3H9"
+                      />
+                 </svg>
+                       Logout
+               </button>
+            </form>
+        </div>
+      </div>
+      <%} else { %>
+        <div>
+           <a href="/auth/login" class="flex items-center gap-2">
+             <svg
+               xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke-width="1.5"
+               stroke="currentColor"
+               class="w-6 h-6"
+             >
+               <path
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-7.5A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h7.5A2.25 2.25 0 0015.75 18.75V15M18 12l3-3m0 0l-3-3m3 3H9"
+               />
+             </svg>
+             Login
+           </a>
+       </div>
+      <%}%>
+
   </div>
+  
 </nav>

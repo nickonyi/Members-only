@@ -12,7 +12,6 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await validateUser(email, password, verifyPassword);
-        console.log("user in da shotta", user);
 
         if (!user) {
           return done(null, false, {

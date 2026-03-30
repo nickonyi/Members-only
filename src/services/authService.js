@@ -40,7 +40,6 @@ export const validateUser = async (email, password, verifyFn) => {
   if (!user) return null;
 
   const isValid = await verifyFn(password, user.passwordHash);
-  console.log(isValid);
 
   return isValid ? user : null;
 };

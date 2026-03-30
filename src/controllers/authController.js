@@ -43,25 +43,26 @@ export const getLogin = (req, res) => {
 };
 
 export const postLogin = async (req, res, next) => {
-  console.log(req.body);
-
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
-
-    console.log(user);
 
     if (!user) {
       return res.render("login", {
         title: "Login",
         errors: [{ msg: info?.message || "Invalid credentials" }],
+        formData: req.body,
       });
     }
 
     req.session.regenerate((err) => {
       if (err) return next(err);
 
-      const redirectTo = req.query.next || "/";
-      res.redirect(redirectTo);
+      req.login(user, (err) => {
+        if (err) return next(err);
+
+        const redirectTo = req.query.next || "/";
+        res.redirect(redirectTo);
+      });
     });
   })(req, res, next);
 };

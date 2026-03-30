@@ -1,9 +1,6 @@
 import pool from "../db/pool.js";
+import { generateUsername } from "../utils/usernamecreator.js";
 
-const generateUsername = (firstName, lastName) => {
-  const randomNum = Math.floor(Math.random() * 10000);
-  return `${firstName}${lastName}${randomNum}`;
-};
 /**
  * Maps a raw DB user row to app-safe user object
  */

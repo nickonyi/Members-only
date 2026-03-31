@@ -11,7 +11,7 @@ const mapCircle = (row) => {
     ownerId: row.owner_id,
     createdAt: row.created_at,
     membersCount: row.members_count,
-    ownerUsername: row.username,
+    ownerUsername: row.owner_username || null,
   };
 };
 

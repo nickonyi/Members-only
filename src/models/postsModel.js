@@ -1,4 +1,4 @@
-import pool from "../db/pool";
+import pool from "../db/pool.js";
 
 const mapPost = (row) => {
   if (!row) return null;
@@ -17,16 +17,15 @@ const mapPost = (row) => {
 };
 
 export const getLatestPublicPostsFromDb = async (limit = 6) => {
-  const { rows } = pool.query(
-    `
-        SELECT
+  const { rows } = await pool.query(
+    ` SELECT
         P.id,
         p.title,
         p.body,
         c.name AS circle_name,
         c.id AS circle_id,
         'Anonymous' AS author_username
-        FROM post p
+        FROM posts p
         JOIN circles c ON c.id = p.circle_id
         WHERE p.visibility = 'public'
         ORDER BY p.created_at DESC

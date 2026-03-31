@@ -1,5 +1,5 @@
-import { getPopularCircles } from "../services/circlesService";
-import { getLatestPublicPosts } from "../services/postsService";
+import { getPopularCircles } from "../services/circlesService.js";
+import { getLatestPublicPosts } from "../services/postsService.js";
 
 export const showHomePage = async (req, res, next) => {
   const publicPosts = await getLatestPublicPosts(6);

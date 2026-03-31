@@ -1,5 +1,5 @@
-import pool from "../db/pool";
-import { generateUsername } from "../utils/usernamecreator";
+import pool from "../db/pool.js";
+import { generateUsername } from "../utils/usernamecreator.js";
 
 const mapCircle = (row) => {
   if (!row) return null;
@@ -11,15 +11,14 @@ const mapCircle = (row) => {
     ownerId: row.owner_id,
     createdAt: row.created_at,
     membersCount: row.members_count,
-    ownerUsername: generateUsername(row.first_name, row.last_name),
+    ownerUsername: row.username,
   };
 };
 
 export const getPopularCirclesFromDb = async (limit = 6) => {
-  const { rows } = pool.query(
-    `
-        SELECT c.*,u.username As owner_username
-        FROM circles c JOIN users u ON c.id = u.owner_id
+  const { rows } = await pool.query(
+    `SELECT c.*,u.username As owner_username
+        FROM circles c JOIN users u ON u.id = c.owner_id
         ORDER BY c.members_count DESC
         LIMIT $1
         `,

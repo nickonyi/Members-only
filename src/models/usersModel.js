@@ -1,5 +1,4 @@
 import pool from "../db/pool.js";
-import { generateUsername } from "../utils/usernamecreator.js";
 
 /**
  * Maps a raw DB user row to app-safe user object
@@ -10,7 +9,7 @@ const mapUser = (row) => {
 
   return {
     id: row.id,
-    username: generateUsername(row.first_name, row.last_name),
+    username: row.username,
     passwordHash: row.password,
     createdAt: row.created_at,
   };
@@ -21,14 +20,15 @@ export const createUserInDB = async ({
   lastName,
   email,
   hashedPassword,
+  username,
 }) => {
   const result = await pool.query(
     `
-    INSERT INTO users(first_name,last_name,email,password) 
-    values($1,$2,$3,$4)
+    INSERT INTO users(first_name,last_name,email,password,username) 
+    values($1,$2,$3,$4,$5)
     RETURNING *
     `,
-    [firstName, lastName, email, hashedPassword],
+    [firstName, lastName, email, hashedPassword, username],
   );
 
   return mapUser(result.rows[0]);

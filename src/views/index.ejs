@@ -56,7 +56,7 @@
                   
                     <div class="grid md:grid-cols-2 gap-6">
                       <% publicPosts.forEach(function(post) { %>
-                        <%- include('partials/postCards', { post: post, hideVisibility: true,hideCircle:true }) %>
+                        <%- include('partials/postCards', { post: post, hideVisibility: true,hideCircle:false }) %>
                       <% }) %>
                     </div>
                   </div>

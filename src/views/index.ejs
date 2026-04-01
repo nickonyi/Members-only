@@ -56,12 +56,42 @@
                   
                     <div class="grid md:grid-cols-2 gap-6">
                       <% publicPosts.forEach(function(post) { %>
-                        <%- include('partials/postCards', { post: post, hideVisibility: true }) %>
+                        <%- include('partials/postCards', { post: post, hideVisibility: true,hideCircle:true }) %>
                       <% }) %>
                     </div>
                   </div>
               </section>
-
+                           <!-- ================= WHY JOIN SECTION ================= -->
+              <section class="py-16 bg-gray-50 border-neutral-200 border-t border-b">
+                 <div class="wrapper">
+                    <h2 class="text-2xl font-bold text-center mb-10">Why Join CirclesAccess?</h2>
+                
+                    <div class="grid md:grid-cols-3 gap-8">
+                    
+                       <div class="bg-white border border-neutral-200 hover:shadow-md  p-6 rounded-xl shadow-sm">
+                          <h3 class="font-semibold text-xl">🔒 Controlled Privacy</h3>
+                          <p class="text-gray-600 text-sm mt-2">
+                             Your identity is only visible inside the circles you join.
+                          </p>
+                       </div>
+                     
+                       <div class="bg-white border border-neutral-200 hover:shadow-md  p-6 rounded-xl shadow-sm">
+                          <h3 class="font-semibold text-xl">🏛 Create Your Own Circles</h3>
+                          <p class="text-gray-600 text-sm mt-2">
+                             Build communities instantly and manage members easily.
+                          </p>
+                       </div>
+                     
+                       <div class="bg-white border border-neutral-200 hover:shadow-md  p-6 rounded-xl shadow-sm">
+                          <h3 class="font-semibold text-xl">📝 Real Conversations</h3>
+                          <p class="text-gray-600 text-sm mt-2">
+                             Post publicly or members-only. Your circles, your rules.
+                          </p>
+                       </div>
+                     
+                    </div>
+                 </div>
+              </section>
      <%- include('partials/footer') %>
   </body>
   <script src="/js/main.js"></script>

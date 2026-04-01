@@ -1,0 +1,61 @@
+<div 
+  class="relative cursor-pointer <%= !hideVisibility ? 'mb-8' : '' %>"
+  onclick="window.location='/posts/<%= post.id %>'"
+>
+  <div class="z-20 relative shadow-md p-4 bg-white border border-neutral-200 rounded-md hover:shadow-lg transition">
+
+    <h3 class="font-semibold text-lg"><%= post.title %></h3>
+
+    <p class="text-gray-700 text-sm mt-2 mb-3">
+      <%= truncate(post.body, 80) %>
+    </p>
+
+    <div class="flex text-sm justify-between">
+      <p class="text-gray-600 flex gap-1">
+        <strong>Author:</strong> <%= post.authorUsername %>
+      </p>
+
+      <% if (!hideCircle) { %>
+        <p class="text-gray-600 flex gap-1">
+          <strong>Circle:</strong>
+          <a 
+            class="underline"
+            onclick="event.stopPropagation()"
+            href="/circles/<%= post.circleId %>"
+          >
+            <%= post.circleName %>
+          </a>
+        </p>
+      <% } %>
+    </div>
+
+    <% if (role === "owner" || role === "admin") { %>
+      <div class="mt-3">
+        <a 
+          href="/posts/<%= post.id %>/delete"
+          onclick="event.stopPropagation();"
+          class="btn bg-rose-200 text-rose-700"
+        >
+          Delete Post
+        </a>
+      </div>
+    <% } %>
+
+  </div>
+
+  <% if (!hideVisibility) { %>
+    <div class="space-x-3 z-10 absolute right-4 top-full">
+
+      <% if (post.visibility === "public") { %>
+        <span class="btn rounded-t-none bg-gray-200 text-gray-700">
+          <%= post.visibility %>
+        </span>
+      <% } else { %>
+        <span class="btn rounded-t-none bg-blue-100 text-blue-700">
+          <%= post.visibility %>
+        </span>
+      <% } %>
+
+    </div>
+  <% } %>
+</div>

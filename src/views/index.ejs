@@ -48,6 +48,21 @@
            </div>
          </div>
     </section>
+
+    <!-- ================= PUBLIC POSTS FEED ================= -->
+              <section class="py-14">
+                  <div class="wrapper">
+                    <h2 class="text-2xl font-bold mb-6">Latest Public Posts</h2>
+                  
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <% publicPosts.forEach(function(post) { %>
+                        <%- include('partials/postCards', { post: post, hideVisibility: true }) %>
+                      <% }) %>
+                    </div>
+                  </div>
+              </section>
+
+     <%- include('partials/footer') %>
   </body>
   <script src="/js/main.js"></script>
 </html>

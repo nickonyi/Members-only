@@ -11,6 +11,7 @@ const mapPost = (row) => {
     body: row.body,
     visibility: row.visibility,
     createdAt: row.created_at,
+    authorUsername: row.author_username ?? "Anonymous",
     circleName: row.circle_name ?? null,
     viewerIsMember: Boolean(row.viewer_is_member),
   };

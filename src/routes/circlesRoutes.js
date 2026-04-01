@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCircles } from "../controllers/circleControllers";
+import { getCircles } from "../controllers/circleControllers.js";
 
 const circlesRoutes = Router();
 

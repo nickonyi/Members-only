@@ -1,0 +1,49 @@
+<%- include('../partials/header') %> <%- include('../partials/nav') %>
+<section class="py-8">
+  <div class="wrapper">
+    <h1 class="section-heading">My Circles</h1>
+    <% if (user) {%>
+        <% if(ownedCircles && ownedCircles.length > 0) {%>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <% ownedCircles.forEach((circle) => { %>
+                    <%- include('partials/circleCard',{circle: circle,hideOwner: true}) %>
+                <%})%>
+            </div>
+            <div class="mt-6 flex justify-end">
+              <a href="/circles/create" class="btn">Create Circle</a>
+            </div>
+        <%} else { %>
+            <p class="text-center text-gray-500">You don't have any circles yet.
+                <a href="/circles/create" class="underline">Create one</a>
+            </p>
+        <%}%>
+    <%} else { %>
+        <p class="text-center">
+            <span class="text-center" px-3 py-1 text-sm font-medium bg-gray-100 text-gray-600 rounded-lg>
+                You must signup to create your circles
+            </span>
+        </p>
+        <div class="mt-3 flex gap-3 justify-center">
+            <a href="/auth/login" class="btn">Login</a>
+            <a href="/auth/signup" class="btn bg-neutral-50 text-neutral-950 hover:bg-neutral-100">Signup</a>
+        </div>
+    <%}%>
+  </div>
+</section>
+
+<section class="bg-gray-50 border-neautral-200 border-t border-b py-8">
+    <div class="wrapper">
+        <h1 class="section-heading"><%= title %></h1>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <% if (circles && circles.length > 0) { %>
+                <% circles.forEach((circle) => { %>
+                    <%- include('partials/circleCard',{circle: circle}) %>
+                <%})%>
+            <%} else { %>
+                <p class="text-center text-gray-500">No circles to display.</p>
+            <%}%>
+        </div>
+    </div>
+</section>
+
+<%-include('../partials/footer') %>

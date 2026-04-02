@@ -6,6 +6,7 @@ import { globalErrorHandler } from "./middlewares/errorMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import circlesRoutes from "./routes/circlesRoutes.js";
+import postsRoutes from "./routes/postsRoutes.js";
 import AppError from "./utils/appError.js";
 import { setLocals } from "./middlewares/localsMiddleware.js";
 import { sessionMiddleware } from "./middlewares/sessionMiddleware.js";
@@ -32,6 +33,7 @@ app.use(setLocals);
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
 app.use("/circles", circlesRoutes);
+app.use("./posts", postsRoutes);
 
 app.use((req, res, next) => {
   next(new AppError("Page not found", 404, req.originalUrl));

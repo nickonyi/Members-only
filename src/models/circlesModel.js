@@ -27,3 +27,27 @@ export const getPopularCirclesFromDb = async (limit = 6) => {
 
   return rows.map(mapCircle);
 };
+
+export const getAllCirclesFromDb = async () => {
+  const { rows } = await pool.query(
+    `
+    SELECT c.*, u.username as owner_username 
+    FROM circles c
+    JOIN users u ON u.id = c.owner_id
+    ORDER BY c.created_at DESC
+    `,
+  );
+  return rows.map(mapCircle);
+};
+
+export const getCirclesOwnedByUserFromDb = async ({ userId }) => {
+  const { rows } = await pool.query(
+    `
+    SELECT *
+    FROM circles
+    WHERE owner_id = $1
+    `,
+    [userId],
+  );
+  return rows.map(mapCircle);
+};

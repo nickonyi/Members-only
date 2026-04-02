@@ -6,7 +6,7 @@
         <% if(ownedCircles && ownedCircles.length > 0) {%>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <% ownedCircles.forEach((circle) => { %>
-                    <%- include('partials/circleCard',{circle: circle,hideOwner: true}) %>
+                    <%- include('../partials/circleCard',{circle: circle,hideOwner: true}) %>
                 <%})%>
             </div>
             <div class="mt-6 flex justify-end">
@@ -19,8 +19,8 @@
         <%}%>
     <%} else { %>
         <p class="text-center">
-            <span class="text-center" px-3 py-1 text-sm font-medium bg-gray-100 text-gray-600 rounded-lg>
-                You must signup to create your circles
+            <span class="text-center px-3 py-1 text-sm font-medium bg-gray-100 text-gray-600 rounded-lg">
+                You must signup to create your own circles
             </span>
         </p>
         <div class="mt-3 flex gap-3 justify-center">
@@ -37,7 +37,7 @@
         <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             <% if (circles && circles.length > 0) { %>
                 <% circles.forEach((circle) => { %>
-                    <%- include('partials/circleCard',{circle: circle}) %>
+                    <%- include('../partials/circleCard',{circle: circle,hideOwner: false}) %>
                 <%})%>
             <%} else { %>
                 <p class="text-center text-gray-500">No circles to display.</p>
@@ -47,3 +47,4 @@
 </section>
 
 <%-include('../partials/footer') %>
+<script src="/js/main.js"></script>

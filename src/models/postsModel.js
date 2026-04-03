@@ -73,8 +73,8 @@ export const countAllPostsFromDb = async ({ viewerId = null }) => {
     SELECT 
      COUNT(*) AS total
      FROM posts p
-      LEFT JOIN circle_members 
-        ON cm.circle_id = p.circled_id AND cm,circle_id =$1
+      LEFT JOIN circle_members cm
+        ON cm.circle_id = p.circle_id AND cm.circle_id = $1
          WHERE p.visibility = 'public' OR (p.visibility ='members_only' AND cm.user_id IS NOT NULL)
      `,
     [viewerId],
@@ -83,7 +83,7 @@ export const countAllPostsFromDb = async ({ viewerId = null }) => {
   return Number(rows[0].total);
 };
 
-export const getPostsByAuthorFromDb = async ({ userId, limit, offset }) => {
+export const getPostsByAuthorFromDB = async ({ userId, limit, offset }) => {
   const { rows } = await pool.query(
     `
   SELECT p.*,

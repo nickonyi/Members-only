@@ -33,7 +33,7 @@ app.use(setLocals);
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
 app.use("/circles", circlesRoutes);
-app.use("./posts", postsRoutes);
+app.use("/posts", postsRoutes);
 
 app.use((req, res, next) => {
   next(new AppError("Page not found", 404, req.originalUrl));

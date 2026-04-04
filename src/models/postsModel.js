@@ -61,7 +61,8 @@ export const getAllPostsFromDb = async ({ viewerId = null, limit, offset }) => {
         ORDER BY p.created_at DESC
         LIMIT $2 OFFSET $3
 
-    `[(viewerId, limit, offset)],
+    `,
+    [viewerId, limit, offset],
   );
 
   return rows.map(mapPost);

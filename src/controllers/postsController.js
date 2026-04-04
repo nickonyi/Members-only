@@ -7,17 +7,20 @@ export const getPosts = async (req, res) => {
   const allPostPages = parseInt(req.query.allPostPages) || 1;
 
   const [
-    { posts: allPosts, pagination: allPostPagination },
+    { posts: allPosts, pagination: allPostsPagination },
     { posts: ownedPosts, pagination: ownedPostsPagination },
   ] = await Promise.all([
     getAllPosts({ viewerId: userId, page: allPostPages, limit: 9 }),
     getPostsByAuthor({ userId, page: ownedPostPage, limit: 6 }),
   ]);
 
+  console.log(allPostsPagination);
+
   res.render("posts", {
-    title: allPosts,
+    title: "All Posts",
+    allPosts,
     ownedPosts,
-    allPostPagination,
+    allPostsPagination,
     ownedPostsPagination,
   });
 };

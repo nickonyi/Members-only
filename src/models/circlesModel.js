@@ -1,5 +1,4 @@
 import pool from "../db/pool.js";
-import { generateUsername } from "../utils/usernamecreator.js";
 
 const mapCircle = (row) => {
   if (!row) return null;

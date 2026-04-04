@@ -1,10 +1,36 @@
-<div class="mt-8 flex justify-center items-center">
-  <div
-    class="border flex rounded divide-x overflow-hidden border-neutral-300 shadow divide-neutral-300"
-  >
-<!--Prev Button-->
-<% if (pagination.hasPrev) { %>
-  <a href="<%= pagination.prevUrl %>" class="px-4 py-2 hover:bg-gray-100">Previous</a>
-<% } %>
-</div>
+<div class="mt-8 flex items-center justify-center">
+  <div class="border flex rounded divide-x overflow-hidden border-neutral-300 shadow divide-neutral-300">
+
+    <!-- Prev Button -->
+    <% if (pagination.hasPrev) { %>
+      <a href="/posts?<%= query ? query : 'page' %>=<%= pagination.prevPage %><%= hash ? '#' + hash : '' %>"
+         class="px-4 py-2 bg-white hover:bg-gray-100 transition flex text-sm items-center gap-1">
+         
+        <%- include("./icons/backward") %> Prev
+      </a>
+    <% } else { %>
+      <span class="px-4 py-2 bg-gray-100 text-gray-400 flex text-sm items-center gap-1">
+        <%- include("./icons/backward") %> Prev
+      </span>
+    <% } %>
+
+    <!-- Page Status -->
+    <span class="px-5 py-2 text-sm bg-gray-50 font-medium shadow-sm">
+      Page <%= pagination.currentPage %> of <%= pagination.totalPages %>
+    </span>
+
+    <!-- Next Button -->
+    <% if (pagination.hasNext) { %>
+      <a href="/posts?<%= query ? query : 'page' %>=<%= pagination.nextPage %><%= hash ? '#' + hash : '' %>"
+         class="px-4 py-2 flex items-center text-sm bg-white hover:bg-gray-100 transition cursor-pointer gap-1">
+         
+        Next <%- include("./icons/forward") %>
+      </a>
+    <% } else { %>
+      <span class="px-4 py-2 flex items-center text-sm bg-gray-100 text-gray-400 gap-1">
+        Next <%- include("./icons/forward") %>
+      </span>
+    <% } %>
+
+  </div>
 </div>

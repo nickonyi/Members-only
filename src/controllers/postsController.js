@@ -14,8 +14,6 @@ export const getPosts = async (req, res) => {
     getPostsByAuthor({ userId, page: ownedPostPage, limit: 6 }),
   ]);
 
-  console.log(allPostsPagination);
-
   res.render("posts", {
     title: "All Posts",
     allPosts,

@@ -14,6 +14,19 @@ const mapCircle = (row) => {
   };
 };
 
+const mapMembership = (row) => {
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    userId: row.user_id,
+    circleId: row.circle_id,
+    role: row.role,
+    joinedAt: row.joined_at,
+    username: row.username,
+  };
+};
+
 export const getPopularCirclesFromDb = async (limit = 6) => {
   const { rows } = await pool.query(
     `SELECT c.*,u.username As owner_username
@@ -49,4 +62,32 @@ export const getCirclesOwnedByUserFromDb = async ({ userId }) => {
     [userId],
   );
   return rows.map(mapCircle);
+};
+
+export const getMembershipFromDb = async ({ userId, circleId }) => {
+  const { rows } = await pool.query(
+    `
+    SELECT *
+      FROM circle_members 
+      WHERE user_id = $1 AND circle_id = $2
+    `,
+    [userId, circleId],
+  );
+
+  return mapMembership(rows[0]);
+};
+
+export const getCircleByIdFromDb = async ({ id }) => {
+  const { rows } = await pool.query(
+    `
+    SELECT c.*,u.username as owner_username 
+    FROM circles c
+    JOIN users u ON
+    u.id = c.owner_id
+    WHERE c.id =$id
+    `,
+    [id],
+  );
+
+  return mapCircle(rows[0]);
 };

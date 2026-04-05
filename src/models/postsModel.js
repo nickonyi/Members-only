@@ -106,12 +106,52 @@ export const getPostsByCircleFromDb = async ({
   limit,
   offset,
 }) => {
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query(
+    `
     SELECT p.*,
         CASE
           WHEN p.visibility = 'public' AND cm.user_id IS NULL THEN 'Anonymous'
           ELSE u.username
-         END AS author_username
-          
-    `);
+         END AS author_username,
+          (cm.user_id IS NOT NULL) AS viewer_is_member
+    FROM posts p
+     JOIN users u ON u.id = p.author_id
+     LEFT JOIN circle_members cm 
+     ON cm.circle_id = p.circle_id
+     AND cm.user_id = $2
+    WHERE p.circle_id = $1 
+     AND(
+       p.visibility = 'public'
+       OR (p.visibility = 'members_only' AND cm.user_id is NOT NULL)
+     )
+       ORDER BY p.created_at DESC
+       LIMIT $3 OFFSET $4
+    `,
+    [circleId, viewerId, limit, offset],
+  );
+
+  return rows.map(mapPost);
+};
+
+export const countVisiblePostsByCircleFromDb = async ({
+  circleId,
+  viewerId,
+}) => {
+  const { rows } = await pool.query(
+    `
+    SELECT COUNT(*) AS total
+    FROM posts p
+    LEFT JOIN circle_members cm
+      ON cm.circle_id = p.circle_id
+      AND cm.user_id = $2
+    WHERE p.circle_id = $1
+      AND (
+       p.visibility = 'public'
+       OR  (p.visibility = 'members_only' AND cm.user_id IS NOT NULL)
+      )
+  `,
+    [circleId, viewerId],
+  );
+
+  return rows.map(mapPost);
 };

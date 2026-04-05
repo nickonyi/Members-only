@@ -3,6 +3,8 @@ import {
   getLatestPublicPostsFromDb,
   countAllPostsFromDb,
   getPostsByAuthorFromDB,
+  getPostsByCircleFromDb,
+  countVisiblePostsByCircleFromDb,
 } from "../models/postsModel.js";
 import { getPagination } from "../utils/pagination.js";
 
@@ -63,4 +65,34 @@ export const getPostsByAuthor = async ({ userId, page = 1, limit = 10 }) => {
   };
 };
 
-export const getPostsByCircle = async () => {};
+export const getPostsByCircle = async ({
+  circleId,
+  viewerId,
+  page = 1,
+  limit = 10,
+}) => {
+  const { limit: l, offset } = getPagination({ page, limit });
+
+  const posts = await getPostsByCircleFromDb({
+    circleId,
+    viewerId,
+    limit: l,
+    offset,
+  });
+
+  const total = await countVisiblePostsByCircleFromDb({ circleId, viewerId });
+
+  const totalPages = Math.ceil(total / l);
+
+  return {
+    posts,
+    pagination: {
+      currentPage: page,
+      totalPages,
+      hasPrev: page > 1,
+      hasNext: page < totalPages,
+      prevPage: page > 1 ? page - 1 : null,
+      nextPage: page < totalPages ? page + 1 : null,
+    },
+  };
+};

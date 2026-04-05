@@ -84,10 +84,25 @@ export const getCircleByIdFromDb = async ({ id }) => {
     FROM circles c
     JOIN users u ON
     u.id = c.owner_id
-    WHERE c.id =$id
+    WHERE c.id =$1
     `,
     [id],
   );
 
   return mapCircle(rows[0]);
+};
+
+export const getMembershipsInCircleFromDb = async ({ circleId }) => {
+  const { rows } = await pool.query(
+    `
+  SELECT cm.*,u.username 
+  FROM circle_members cm
+  JOIN users u ON u.id = cm.user_id
+  WHERE circle_id = $1
+  
+    `,
+    [circleId],
+  );
+
+  return rows.map(mapMembership);
 };

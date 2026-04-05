@@ -17,3 +17,5 @@ export const getCircles = async (req, res) => {
     ownedCircles,
   });
 };
+
+export const showCircle = (req, res) => {};

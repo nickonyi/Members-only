@@ -62,3 +62,5 @@ export const getPostsByAuthor = async ({ userId, page = 1, limit = 10 }) => {
     },
   };
 };
+
+export const getPostsByCircle = async () => {};

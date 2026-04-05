@@ -99,3 +99,19 @@ export const getPostsByAuthorFromDB = async ({ userId, limit, offset }) => {
 
   return rows.map(mapPost);
 };
+
+export const getPostsByCircleFromDb = async ({
+  circleId,
+  viewerId,
+  limit,
+  offset,
+}) => {
+  const { rows } = await pool.query(`
+    SELECT p.*,
+        CASE
+          WHEN p.visibility = 'public' AND cm.user_id IS NULL THEN 'Anonymous'
+          ELSE u.username
+         END AS author_username
+          
+    `);
+};

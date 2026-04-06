@@ -1,7 +1,7 @@
 import { getCircleById, getMembership } from "../services/circlesService.js";
 import AppError from "../utils/appError.js";
 
-export const loadCirlce = async (req, res, next) => {
+export const loadCircle = async (req, res, next) => {
   const circleId = req.params?.circleId ?? req.post?.circleId;
 
   const circle = await getCircleById(circleId);

@@ -153,5 +153,5 @@ export const countVisiblePostsByCircleFromDb = async ({
     [circleId, viewerId],
   );
 
-  return rows.map(mapPost);
+  return Number(rows[0].total);
 };

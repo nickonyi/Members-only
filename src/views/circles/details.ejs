@@ -51,7 +51,7 @@
     </div>
 
     <hr class="my-4">
-    <%- include('partials/membersList', { members }) %>
+    <%- include('../partials/membersList', { members }) %>
 
 
     <%# ============================
@@ -68,7 +68,7 @@
     </p>
 
     <hr class="my-4">
-    <%- include('partials/membersList', { members }) %>
+    <%- include('../partials/membersList', { members }) %>
 
 
     <%# ============================
@@ -137,11 +137,11 @@ POSTS SECTION
 
     <div class="grid md:grid-cols-2 gap-4">
       <% circlePosts.forEach(post => { %>
-      <%- include('partials/postCard', { post, hideCircle: true, role }) %>
+      <%- include('../partials/postCards', { post, hideCircle: true, role,hideVisibility:false }) %>
       <% }) %>
     </div>
 
-    <%- include('partials/pagination') %>
+    <%- include('../partials/pagination') %>
 
     <% } else { %>
     <p class="text-gray-500">This circle has no posts yet.</p>

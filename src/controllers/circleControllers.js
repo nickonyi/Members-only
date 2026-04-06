@@ -24,7 +24,7 @@ export const showCircle = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const role = req.membership?.role ?? null;
 
-  const { posts: circlePosts, pagination } = getPostsByCircle({
+  const { posts: circlePosts, pagination } = await getPostsByCircle({
     circleId: req.circle.id,
     viewerId: req.user?.id ?? null,
     page,

@@ -1,0 +1,29 @@
+<%- include('../partials/header') %> <%- include('../partials/nav') %>
+<section class="py-8">
+  <div class="wrapper">
+    <h1 class="text-3xl font-bold text-neutral-900 mb-2"><%= post.title %></h1>
+
+    <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-2">
+      <span>
+        In
+        <a
+          href="/circles/<%= post.circleId%>"
+          class="text-rose-600 text-underline"
+        >
+          <%= post.circleName %>
+        </a>
+
+        <span>.</span>
+        <span>By <%= post.authorUsername %></span>
+      </span>
+    </div>
+    <div class="mb-4">
+        <% if (post.visibility === 'members_only') { %>
+            <span>Members Only</span>
+        <% } else { %>
+            <span>Public</span>
+        <% } %>
+    </div>
+  </div>
+</section>
+<%- include('../partials/footer') %>

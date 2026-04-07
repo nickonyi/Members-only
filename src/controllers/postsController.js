@@ -22,3 +22,12 @@ export const getPosts = async (req, res) => {
     ownedPostsPagination,
   });
 };
+
+export const showPost = (req, res) => {
+  console.log(req.post);
+
+  res.render("posts/details", {
+    title: req.post.title,
+    post: req.post,
+  });
+};

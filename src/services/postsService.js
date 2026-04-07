@@ -5,6 +5,7 @@ import {
   getPostsByAuthorFromDB,
   getPostsByCircleFromDb,
   countVisiblePostsByCircleFromDb,
+  getPostByIdFromDb,
 } from "../models/postsModel.js";
 import { getPagination } from "../utils/pagination.js";
 
@@ -95,4 +96,8 @@ export const getPostsByCircle = async ({
       nextPage: page < totalPages ? page + 1 : null,
     },
   };
+};
+
+export const getPostById = async ({ postId, viewerId }) => {
+  return getPostByIdFromDb({ postId, viewerId });
 };

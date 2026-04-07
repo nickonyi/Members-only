@@ -1,4 +1,5 @@
 import { getCircleById, getMembership } from "../services/circlesService.js";
+import { getPostById } from "../services/postsService.js";
 import AppError from "../utils/appError.js";
 
 export const loadCircle = async (req, res, next) => {
@@ -33,5 +34,30 @@ export const loadMembership = async (req, res, next) => {
   req.membership = membership || null;
   res.locals.role = membership?.role || null;
 
+  next();
+};
+
+export const loadPost = async (req, res, next) => {
+  const { postId } = req.params;
+  const viewerId = req?.user?.id ?? null;
+
+  const post = await getPostById({ postId, viewerId });
+
+  if (!post) {
+    return next(new AppError("Post not found", 404, req.originalUrl));
+  }
+
+  if (post.visibility === "members_only" && !post.viewerIsMember) {
+    return next(
+      new AppError(
+        "This post is only visible to members only",
+        403,
+        req.originalUrl,
+      ),
+    );
+  }
+
+  req.post = post;
+  res.locals.post = post;
   next();
 };

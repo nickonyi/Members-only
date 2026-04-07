@@ -155,3 +155,29 @@ export const countVisiblePostsByCircleFromDb = async ({
 
   return Number(rows[0].total);
 };
+
+export const getPostByIdFromDb = async ({ postId, viewerId = null }) => {
+  const { rows } = await pool.query(
+    `SELECT p.*,
+       CASE
+         WHEN p.visibility = 'public' AND cm.user_id IS NULL THEN 'Anonymous'
+         ELSE u.username
+         END AS author_name,
+         c.name AS circle_name,
+         c.id AS circle_id
+      FROM posts p
+      JOIN users u ON u.id = p.author_id
+      JOIN circles c ON c.id = p.circle_id
+      LEFT JOIN circle_members cm ON cm.circle_id = p.circle_id
+      AND cm.user_id = $2
+      WHERE p.id = $1
+        AND(
+          p.visibility = 'public' 
+          OR (p.visibility='members_only' AND cm.user_id IS NOT NULL)
+        )   
+    `,
+    [postId, viewerId],
+  );
+
+  return mapPost(rows[0]);
+};

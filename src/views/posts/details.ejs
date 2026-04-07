@@ -1,29 +1,121 @@
 <%- include('../partials/header') %> <%- include('../partials/nav') %>
 <section class="py-8">
   <div class="wrapper">
-    <h1 class="text-3xl font-bold text-neutral-900 mb-2"><%= post.title %></h1>
+
+    <h1 class="text-3xl font-bold text-neutral-900 mb-2">
+      <%= post.title %>
+    </h1>
 
     <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-2">
       <span>
         In
-        <a
-          href="/circles/<%= post.circleId%>"
-          class="text-rose-600 text-underline"
-        >
+        <a href="/circles/<%= post.circleId %>"
+           class="text-rose-600 hover:underline">
           <%= post.circleName %>
         </a>
-
-        <span>.</span>
-        <span>By <%= post.authorUsername %></span>
       </span>
+
+      <span>•</span>
+
+      <span>By <%= post.authorUsername %></span>
     </div>
+
     <div class="mb-4">
-        <% if (post.visibility === 'members_only') { %>
-            <span>Members Only</span>
-        <% } else { %>
-            <span>Public</span>
-        <% } %>
+      <% if (post.visibility === "members_only") { %>
+        <span class="px-2 py-0.5 rounded bg-blue-200 text-blue-700 text-xs">
+          Members Only
+        </span>
+      <% } else { %>
+        <span class="px-2 py-0.5 rounded bg-gray-100 text-gray-700 text-xs">
+          Public
+        </span>
+      <% } %>
     </div>
+
+    <!-- ============================
+         ACCESS CONTROL
+    ============================= -->
+
+    <!-- MEMBERS / ADMINS / OWNER -->
+    <% if (post.viewerIsMember) { %>
+
+      <article class="prose max-w-none text-gray-800">
+        <%= post.body %>
+      </article>
+
+      <!-- OWNER / ADMIN ACTIONS -->
+      <% if (role === "owner" || role === "admin") { %>
+        <div class="mt-6 flex gap-3 justify-end">
+          <a href="/posts/<%= post.id %>/delete"
+             class="btn bg-red-600">
+            Delete Post
+          </a>
+        </div>
+      <% } %>
+
+    <!-- LOGGED-IN BUT NOT MEMBER -->
+    <% } else if (user) { %>
+
+      <% if (post.visibility === "public") { %>
+        <article class="prose max-w-none text-gray-800">
+          <%= post.body %>
+        </article>
+      <% } else { %>
+
+        <div class="bg-red-50 border border-red-200 p-5 rounded-lg">
+          <p class="text-red-700 font-semibold mb-2">
+            This post is members-only
+          </p>
+          <p class="text-gray-700 mb-3">
+            Join the circle to read and participate in discussions.
+          </p>
+          <a href="/circles/<%= post.circleId %>/join"
+             class="btn inline-block">
+            Join Circle
+          </a>
+        </div>
+
+      <% } %>
+
+    <!-- GUEST -->
+    <% } else { %>
+
+      <% if (post.visibility === "public") { %>
+        <article class="prose max-w-none text-gray-800">
+          <%= post.body %>
+        </article>
+      <% } else { %>
+
+        <div class="bg-gray-100 border p-5 rounded-lg">
+          <p class="font-semibold mb-2">
+            Login required
+          </p>
+          <p class="text-gray-600 mb-3">
+            This post is visible only to members of the circle.
+          </p>
+          <div class="flex gap-3">
+            <a href="/auth/login" class="btn">
+              Login
+            </a>
+            <a href="/auth/signup"
+               class="btn bg-neutral-50 text-neutral-950 hover:bg-neutral-100">
+              Signup
+            </a>
+          </div>
+        </div>
+
+      <% } %>
+
+    <% } %>
+
+    <!-- BACK LINK -->
+    <div class="mt-8 flex justify-end">
+      <a href="/circles/<%= post.circleId %>"
+         class="text-sm text-rose-600 hover:underline">
+        ← Back to Circle
+      </a>
+    </div>
+
   </div>
 </section>
 <%- include('../partials/footer') %>

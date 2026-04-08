@@ -1,9 +1,11 @@
 import {
+  createCircle,
   getAllCircles,
   getCirclesOwnedByUser,
   getMembershipsInCirlce,
 } from "../services/circlesService.js";
 import { getPostsByCircle } from "../services/postsService.js";
+import { matchedData, validationResult } from "express-validator";
 
 export const getCircles = async (req, res) => {
   const userId = req?.user?.id ?? null;
@@ -51,4 +53,30 @@ export const showCircle = async (req, res) => {
     circlePosts,
     pagination,
   });
+};
+
+export const createCircleGet = (req, res) => {
+  res.render("circles/create", {
+    title: "Create new circle",
+    errors: [],
+    formData: [],
+  });
+};
+
+export const createCirclePost = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render("circles/create", {
+      title: "Create New Circle",
+      errors: errors.array(),
+      formData: req.body,
+    });
+  }
+
+  const { name, description } = matchedData(req);
+
+  await createCircle({ name, description, ownerId: req.user.id });
+
+  res.redirect("/circles");
 };

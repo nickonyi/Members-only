@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+ <%- include('../partials/nav') %>
+<section class="py-8">
+  <div class="wrapper">
+
+    <h1 class="section-heading"><%= title %></h1>
+
+    <div class="max-w-xs">
+
+      <% if (errors && errors.length) { %>
+        <ul class="mb-4 text-red-600">
+          <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+
+      <form method="POST"
+            action=""
+            class="flex flex-col gap-2">
+
+        <!-- Name Input -->
+        <div>
+          <label for="name"
+                 class="block font-medium mb-1">
+            Circle Name
+          </label>
+          <input type="text"
+                 name="name"
+                 id="name"
+                 value="<%= formData?.name || '' %>"
+                 class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-rose-400" />
+        </div>
+
+        <!-- Description Input -->
+        <div>
+          <label for="description"
+                 class="block font-medium mb-1">
+            Description
+          </label>
+          <textarea name="description"
+                    id="description"
+                    class="w-full border p-2 h-28 rounded resize-none focus:outline-none focus:ring-2 focus:ring-rose-400"><%= formData?.description || '' %></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="btn-lg self-start">
+          Create Circle
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<%- include('../partials/footer') %> 

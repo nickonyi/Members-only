@@ -5,6 +5,8 @@ import {
   getMembershipFromDb,
   getCircleByIdFromDb,
   getMembershipsInCircleFromDb,
+  createCircleInDb,
+  insertOwnerAsMemberInDb,
 } from "../models/circlesModel.js";
 
 export const getPopularCircles = async (limit = 6) => {
@@ -29,4 +31,15 @@ export const getMembership = async ({ userId, circleId }) => {
 
 export const getMembershipsInCirlce = async (circleId) => {
   return getMembershipsInCircleFromDb({ circleId });
+};
+
+export const createCircle = async ({ name, description, ownerId }) => {
+  const circle = await createCircleInDb({ name, description, ownerId });
+
+  await insertOwnerAsMemberInDb({
+    ownerId,
+    circleId: circle.id,
+  });
+
+  return circle;
 };

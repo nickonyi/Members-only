@@ -106,3 +106,29 @@ export const getMembershipsInCircleFromDb = async ({ circleId }) => {
 
   return rows.map(mapMembership);
 };
+
+export const createCircleInDb = async ({ name, description, ownerId }) => {
+  const { rows } = await pool.query(
+    `
+    INSERT INTO circles(name,description,owner_id) 
+    VALUES ($1,$2,$3)
+    RETURNING *  
+  `,
+    [name, description, ownerId],
+  );
+
+  return mapCircle(rows[0]);
+};
+
+export const insertOwnerAsMemberInDb = async ({ ownerId, circleId }) => {
+  const { rows } = await pool.query(
+    `
+    INSERT INTO circle_members(user_id,circle_id,role)
+    VALUES ($1,$2,'owner')
+    RETURNING *
+    `,
+    [ownerId, circleId],
+  );
+
+  return rows[0];
+};

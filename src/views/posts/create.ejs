@@ -1,0 +1,100 @@
+<% include('../partials/header') %>
+<% include('../partials/nav') %>
+<section class="py-8">
+    <div class="wrapper">
+
+        <h1 class="section-heading"><%= title %></h1>
+
+        <div class="max-w-xs">
+
+            {{!-- ================= ERRORS ================= --}}
+            <% if (errors) { %>
+            <% if (errors.length) { %>
+            <ul class="mb-4 text-red-600">
+                <% errors.forEach((error)=> { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+            <% } %>
+            
+
+            {{!-- ================= FORM ================= --}}
+            <form method="POST"
+                  action=""
+                  class="flex flex-col gap-3">
+
+                {{!-- Title --}}
+                <label for="title">
+                    <span class="block text-sm font-medium mb-1">Title</span>
+                    <input type="text"
+                           name="title"
+                           id="title"
+                           class="border p-2 w-full rounded"
+                           value="<%= formData.title %>"
+                           required />
+                </label>
+
+                <div class="self-start">
+                    <label class="block">Circle</label>
+                    <select name="circleId"
+                            class="border p-2 w-full rounded">
+
+                        <% userCircles.forEach((circle) => { %>
+                        <option value="<%= circle.id %>"
+                                <%= circle.isSelected ? 'selected' : '' %>>
+                            <%= circle.name %>
+                        </option>
+                        <% }); %>
+
+                    </select>
+                </div>
+
+                {{!-- Visibility --}}
+                <div>
+                    <label class="block text-sm font-medium mb-1">
+                        Visibility
+                    </label>
+                    <select name="visibility"
+                            class="border p-2 w-full rounded">
+                        <option value="public"
+                                <%= formData.visibility === "public" ? 'selected' : '' %>>
+                            Public
+                        </option>
+                        <option value="members_only"
+                                <%= formData.visibility === "members_only" ? 'selected' : '' %>>
+                            Members Only
+                        </option>
+                    </select>
+                </div>
+
+                {{!-- Body --}}
+                <label for="body">
+                    <span class="block text-sm font-medium mb-1">Body</span>
+                    <textarea name="body"
+                              id="body"
+                              rows="6"
+                              class="border p-2 w-full rounded"
+                              required><%= formData.body %></textarea>
+                </label>
+
+                {{!-- Actions --}}
+                <div class="flex gap-3 mt-2">
+                    <button type="submit"
+                            class="btn-lg">
+                        Update Post
+                    </button>
+
+                    <a href="/posts/<%= formData.id %>"
+                       class="btn-lg bg-neutral-100 text-neutral-950 hover:bg-neutral-200">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<% include('../partials/footer') %>

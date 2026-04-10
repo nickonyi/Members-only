@@ -132,3 +132,19 @@ export const insertOwnerAsMemberInDb = async ({ ownerId, circleId }) => {
 
   return rows[0];
 };
+
+export const getCirclesUserIsMemberOfFromDb = async ({ userId }) => {
+  const { rows } = await pool.query(
+    `
+    
+    SELECT c.*,cm.roles
+    FROM circle_members cm
+    JOIN circles c ON c.id = cm.circle_id
+    WHERE cm.circle_id = $1
+    ORDER BY cm.joined_at DESC
+    `,
+    [userId],
+  );
+
+  return rows.map(mapCircle);
+};

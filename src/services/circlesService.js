@@ -8,6 +8,7 @@ import {
   createCircleInDb,
   insertOwnerAsMemberInDb,
   getCirclesUserIsMemberOfFromDb,
+  deleteCircleFromDb,
 } from "../models/circlesModel.js";
 
 export const getPopularCircles = async (limit = 6) => {
@@ -31,8 +32,6 @@ export const getMembership = async (userId, circleId) => {
 };
 
 export const getMembershipsInCirlce = async (userId, circleId) => {
-  console.log(userId, circleId);
-
   return getMembershipsInCircleFromDb({ userId, circleId });
 };
 
@@ -47,6 +46,10 @@ export const createCircle = async ({ name, description, ownerId }) => {
   return circle;
 };
 
-export const getCirclesUserIsMemberOf = (userId) => {
-  return getCirclesUserIsMemberOfFromDb({ userId });
+export const getCirclesUserIsMemberOf = async (userId) => {
+  return await getCirclesUserIsMemberOfFromDb({ userId });
+};
+
+export const deleteCircleService = async (circleId) => {
+  return await deleteCircleFromDb({ circleId });
 };

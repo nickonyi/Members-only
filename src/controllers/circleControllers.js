@@ -1,5 +1,6 @@
 import {
   createCircle,
+  deleteCircleService,
   getAllCircles,
   getCirclesOwnedByUser,
   getMembershipsInCirlce,
@@ -47,6 +48,8 @@ export const showCircle = async (req, res) => {
     });
   }
 
+  console.log(req.circle);
+
   res.render("circles/details", {
     title: req.circle.name,
     circle: req.circle,
@@ -77,6 +80,12 @@ export const createCirclePost = async (req, res) => {
   const { name, description } = matchedData(req);
 
   await createCircle({ name, description, ownerId: req.user.id });
+
+  res.redirect("/circles");
+};
+
+export const deleteCircleController = async (req, res) => {
+  await deleteCircleService(req.circle.id);
 
   res.redirect("/circles");
 };

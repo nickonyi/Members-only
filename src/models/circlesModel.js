@@ -149,3 +149,15 @@ export const getCirclesUserIsMemberOfFromDb = async ({ userId }) => {
 
   return rows.map(mapCircle);
 };
+
+export const deleteCircleFromDb = async ({ circleId }) => {
+  const { rows } = await pool.query(
+    `DELETE FROM circles 
+     WHERE id =$1
+     RETURNING *
+    `,
+    [circleId],
+  );
+
+  return mapCircle(rows[0]);
+};

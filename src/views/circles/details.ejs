@@ -3,6 +3,7 @@
   <div class="wrapper">
 
     <h1 class="text-3xl font-bold text-rose-600 mb-1"><%= circle.name %></h1>
+   
 
     <p class="text-gray-600 mb-4">
       <% if (circle.description) { %><%= circle.description %><% } else { %><em>No description provided.</em><% } %>
@@ -28,7 +29,7 @@
     </div>
 
     <hr class="my-4">
-    <%- include('partials/membersList', { members }) %>
+    <%- include('../partials/membersList', { members }) %>
 
 
     <%# ============================
@@ -60,7 +61,7 @@
     <% } else if (role === "member") { %>
 
     <span class="inline-block px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-700 rounded-full">
-      You are a Member eey
+      You are a Member 
     </span>
 
     <p class="text-gray-600 mt-2 text-sm">

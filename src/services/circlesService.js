@@ -26,12 +26,14 @@ export const getCircleById = async (id) => {
   return getCircleByIdFromDb({ id });
 };
 
-export const getMembership = async ({ userId, circleId }) => {
+export const getMembership = async (userId, circleId) => {
   return getMembershipFromDb({ userId, circleId });
 };
 
-export const getMembershipsInCirlce = async (circleId) => {
-  return getMembershipsInCircleFromDb({ circleId });
+export const getMembershipsInCirlce = async (userId, circleId) => {
+  console.log(userId, circleId);
+
+  return getMembershipsInCircleFromDb({ userId, circleId });
 };
 
 export const createCircle = async ({ name, description, ownerId }) => {

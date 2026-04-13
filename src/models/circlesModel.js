@@ -129,6 +129,7 @@ export const insertOwnerAsMemberInDb = async ({ ownerId, circleId }) => {
     `,
     [ownerId, circleId],
   );
+  console.log(rows);
 
   return rows[0];
 };

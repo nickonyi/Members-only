@@ -31,7 +31,7 @@ export const getMembership = async (userId, circleId) => {
   return getMembershipFromDb({ userId, circleId });
 };
 
-export const getMembershipsInCirlce = async (userId, circleId) => {
+export const getMembershipsInCircle = async (userId, circleId) => {
   return getMembershipsInCircleFromDb({ userId, circleId });
 };
 

@@ -14,5 +14,6 @@ export const requirePermission = (policyFn, resourcekey = null) => {
         ),
       );
     }
+    next();
   };
 };

@@ -5,6 +5,7 @@ import {
   deleteCircleController,
   getCircles,
   showCircle,
+  updateCircleGet,
 } from "../controllers/circleControllers.js";
 import {
   loadCircle,
@@ -13,7 +14,10 @@ import {
 import { ensureAuth } from "../middlewares/authMiddleware.js";
 import { circleValidator } from "../middlewares/validators/circleValidators.js";
 import { requirePermission } from "../middlewares/permissionsMiddleware.js";
-import { canDeleteCircle } from "../policies/circlesPolicies.js";
+import {
+  canDeleteCircle,
+  canManageMembers,
+} from "../policies/circlesPolicies.js";
 
 const circlesRoutes = Router();
 
@@ -25,6 +29,16 @@ circlesRoutes
   .post(ensureAuth, circleValidator, createCirclePost);
 
 circlesRoutes.get("/:circleId", loadCircle, loadMembership, showCircle);
+
+circlesRoutes
+  .route("/:circleId/update")
+  .get(
+    ensureAuth,
+    loadCircle,
+    loadMembership,
+    requirePermission(canManageMembers),
+    updateCircleGet,
+  );
 
 circlesRoutes.get(
   "/:circleId/delete",

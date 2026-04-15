@@ -3,7 +3,7 @@ import {
   deleteCircleService,
   getAllCircles,
   getCirclesOwnedByUser,
-  getMembershipsInCirlce,
+  getMembershipsInCircle,
 } from "../services/circlesService.js";
 import { getPostsByCircle } from "../services/postsService.js";
 import { matchedData, validationResult } from "express-validator";
@@ -37,7 +37,7 @@ export const showCircle = async (req, res) => {
   const isMember = Boolean(role);
 
   if (isMember) {
-    const members = await getMembershipsInCirlce(req.circle.id);
+    const members = await getMembershipsInCircle(req.circle.id);
 
     return res.render("circles/details", {
       title: req.circle.name,
@@ -88,4 +88,15 @@ export const deleteCircleController = async (req, res) => {
   await deleteCircleService(req.circle.id);
 
   res.redirect("/circles");
+};
+
+export const updateCircleGet = async (req, res) => {
+  const members = await getMembershipsInCircle(req.circle.id);
+
+  res.render("circles/update", {
+    title: "update" + req.circle.name,
+    circle: req.circle,
+    members,
+    errors: [],
+  });
 };

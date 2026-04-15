@@ -1,0 +1,139 @@
+<%- include('../partials/header') %> <%- include('../partials/nav') %>
+<section class="py-8">
+    <div class="wrapper">
+
+        <h1 class="section-heading mb-0">Update Circle</h1>
+        <p class="text-rose-600 mb-6"><%= circle.name %></p>
+
+        <div class="max-w-xs">
+
+            <% if (errors && errors.length) { %>
+                <ul class="mb-4 text-red-600">
+                    <% errors.forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            <% } %>
+
+            <form action="/circles/<%= circle.id %>/update"
+                  method="POST"
+                  class="flex flex-col gap-2">
+
+                <div>
+                    <label class="font-medium block mb-1">Circle Name</label>
+                    <input type="text"
+                           name="name"
+                           value="<%= circle.name %>"
+                           class="w-full border p-2 rounded">
+                </div>
+
+                <div>
+                    <label class="font-medium block mb-1">Description</label>
+                    <textarea name="description"
+                              class="w-full border p-2 rounded h-24"><%= circle.description %></textarea>
+                </div>
+
+                <button type="submit"
+                        class="btn-lg self-start">
+                    Update Circle
+                </button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<section class="py-8">
+    <div class="wrapper">
+
+        <h2 class="section-heading">Manage Members</h2>
+
+        <form action="/circles/<%= circle.id %>/members/add"
+              method="POST"
+              class="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-6">
+
+            <input type="text"
+                   name="username"
+                   placeholder="Enter username to add"
+                   autocomplete="off"
+                   required
+                   class="w-full text-sm sm:flex-1 border border-neutral-300 focus:border-black focus:ring-1 focus:ring-black p-2 rounded-md outline-none transition">
+
+            <button class="btn-lg w-full sm:w-auto">
+                Add Member
+            </button>
+        </form>
+
+        <ul class="flex flex-wrap gap-4">
+            <% members.forEach(member => { %>
+            <li class="bg-gray-50 grow min-w-2xs border border-neutral-200 shadow rounded p-4 flex flex-col gap-2">
+
+                <div class="flex justify-between items-center">
+                    <strong><%= member.username %></strong>
+
+                    <% if (member.role === "owner") { %>
+                        <span class="px-2 py-1 text-xs bg-green-200 text-green-800 rounded-full">Owner</span>
+                    <% } else if (member.role === "admin") { %>
+                        <span class="px-2 py-1 text-xs bg-blue-200 text-blue-800 rounded-full">Admin</span>
+                    <% } else { %>
+                        <span class="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded-full">Member</span>
+                    <% } %>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mt-2">
+
+                    <% if (role === "owner") { %>
+
+                        <% if (circle.ownerId !== member.userId) { %>
+
+                            <% if (member.role === "admin") { %>
+                                <a href="/circles/<%= circle.id %>/members/<%= member.userId %>/role/member"
+                                   class="text-sm text-indigo-600 hover:underline">Demote to Member</a>
+                            <% } else { %>
+                                <a href="/circles/<%= circle.id %>/members/<%= member.userId %>/role/admin"
+                                   class="text-sm text-indigo-600 hover:underline">Promote to Admin</a>
+                            <% } %>
+
+                            <a href="/circles/<%= circle.id %>/members/<%= member.userId %>/remove"
+                               class="text-sm text-red-600 hover:underline">Remove</a>
+
+                        <% } %>
+
+                    <% } else if (role === "admin") { %>
+
+                        <% if (circle.ownerId !== member.userId) { %>
+
+                            <% if (member.role === "member") { %>
+                                <a href="/circles/<%= circle.id %>/members/<%= member.userId %>/role/admin"
+                                   class="text-sm text-indigo-600 hover:underline">Promote to Admin</a>
+
+                                <a href="/circles/<%= circle.id %>/members/<%= member.userId %>/remove"
+                                   class="text-sm text-red-600 hover:underline">Remove</a>
+                            <% } %>
+
+                        <% } %>
+
+                    <% } %>
+
+                </div>
+
+            </li>
+            <% }) %>
+        </ul>
+
+    </div>
+</section>
+
+<% if (role === "owner") { %>
+<section class="py-8">
+    <div class="wrapper">
+        <h2 class="section-heading">Danger Zone</h2>
+
+        <a href="/circles/<%= circle.id %>/delete"
+           class="btn-lg bg-red-600">
+            Delete This Circle
+        </a>
+    </div>
+</section>
+<% } %>
+<%- include('../partials/footer') %>

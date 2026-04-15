@@ -1,11 +1,13 @@
 import { Router } from "express";
 import {
+  addMemberPost,
   createCircleGet,
   createCirclePost,
   deleteCircleController,
   getCircles,
   showCircle,
   updateCircleGet,
+  updateCirclePost,
 } from "../controllers/circleControllers.js";
 import {
   loadCircle,
@@ -38,6 +40,14 @@ circlesRoutes
     loadMembership,
     requirePermission(canManageMembers),
     updateCircleGet,
+  )
+  .post(
+    ensureAuth,
+    loadCircle,
+    loadMembership,
+    requirePermission(canManageMembers),
+    circleValidator,
+    updateCirclePost,
   );
 
 circlesRoutes.get(
@@ -47,6 +57,15 @@ circlesRoutes.get(
   loadMembership,
   requirePermission(canDeleteCircle),
   deleteCircleController,
+);
+
+circlesRoutes.post(
+  "/:circleId/members/add",
+  ensureAuth,
+  loadCircle,
+  loadMembership,
+  requirePermission(canManageMembers),
+  addMemberPost,
 );
 
 export default circlesRoutes;

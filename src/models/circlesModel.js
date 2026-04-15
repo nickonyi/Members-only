@@ -161,3 +161,33 @@ export const deleteCircleFromDb = async ({ circleId }) => {
 
   return mapCircle(rows[0]);
 };
+
+export const updateCircleInDb = async ({ name, description, circleId }) => {
+  const { rows } = await pool.query(
+    `
+    UPDATE circles
+    SET 
+        name = COALESCE($1,name),
+        description = COALESCE($2,description)
+    WHERE id =$3
+    RETURNING *      
+    `,
+    [name ?? null, description ?? null, circleId],
+  );
+
+  return mapCircle(rows[0]);
+};
+
+export const addMemberInDb = async ({ circleId, userId, role }) => {
+  const { rows } = await pool.query(
+    `
+    INSERT INTO circle_members (user_id,circle_id,role)
+    VALUES($1,$2,$3)
+    ON CONFLICT (user_id,circle_id) DO NOTHING
+    RETURNING *
+    `,
+    [userId, circleId, role],
+  );
+
+  return mapMembership(rows[0]);
+};

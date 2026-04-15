@@ -1,9 +1,11 @@
 import {
+  addMemberByUsername,
   createCircle,
   deleteCircleService,
   getAllCircles,
   getCirclesOwnedByUser,
   getMembershipsInCircle,
+  updateCircle,
 } from "../services/circlesService.js";
 import { getPostsByCircle } from "../services/postsService.js";
 import { matchedData, validationResult } from "express-validator";
@@ -99,4 +101,37 @@ export const updateCircleGet = async (req, res) => {
     members,
     errors: [],
   });
+};
+
+export const updateCirclePost = async (req, res) => {
+  const errors = validationResult(req);
+  const members = await getMembershipsInCircle(req.circle.id);
+
+  if (!errors.isEmpty()) {
+    return res.render("circles/update", {
+      title: "Update" + req.circle.name,
+      errors: errors.array(),
+      circle: req.circle,
+      members,
+    });
+  }
+
+  const { name, description } = matchedData(req);
+
+  await updateCircle({ name, description, circleId: req.circle.id });
+
+  res.redirect("/circles/" + req.circle.id);
+};
+
+export const addMemberPost = async (req, res) => {
+  const { circleId } = req.params;
+  const { username } = req.body;
+  addMemberByUsername({
+    circleId: Number(circleId),
+    actorUserId: req.user.id,
+    actorRole: req.membership.role,
+    username,
+  });
+
+  res.redirect(`/circles/${circleId}`);
 };

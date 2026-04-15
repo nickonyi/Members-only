@@ -50,3 +50,14 @@ export const getUserByIdFromDB = async (id) => {
 
   return mapUser(result.rows[0]);
 };
+
+export const getUserByUsernameFromDb = async ({ username }) => {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM users WHERE LOWER(username) = LOWER($1) LIMIT 1
+    `,
+    [username],
+  );
+
+  return mapUser(rows[0]);
+};

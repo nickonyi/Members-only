@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addMemberPost,
+  changeRoleToAdminGet,
   createCircleGet,
   createCirclePost,
   deleteCircleController,
@@ -66,6 +67,15 @@ circlesRoutes.post(
   loadMembership,
   requirePermission(canManageMembers),
   addMemberPost,
+);
+
+circlesRoutes.get(
+  "/:circleId/members/:memberId/role/admin",
+  ensureAuth,
+  loadCircle,
+  loadMembership,
+  requirePermission(canManageMembers),
+  changeRoleToAdminGet,
 );
 
 export default circlesRoutes;

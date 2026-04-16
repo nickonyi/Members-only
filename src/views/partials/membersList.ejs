@@ -1,18 +1,18 @@
 <h2 class="text-xl font-semibold mb-2">Circle Members</h2>
 
-<% if (circle.members) { %>
+<% if (members) { %>
 <ul class="space-y-2">
-  <% circle.members.forEach(member => { %>
+  <% members.forEach(member => { %>
   <li class="border-l-4 border-rose-400 pl-3 py-2 bg-gray-50 rounded">
     <div class="flex items-center justify-between">
       <strong><%= member.username %></strong>
 
-      {{!-- Role Badges --}}
-      <% if (role === "owner") { %>
+      
+      <% if (member.role === "owner") { %>
       <span class="text-xs px-2 py-1 bg-green-200 text-green-800 rounded-full"
         >Owner</span
       >
-      <% } else if (role === "admin") { %>
+      <% } else if (member.role === "admin") { %>
       <span class="text-xs px-2 py-1 bg-blue-200 text-blue-800 rounded-full"
         >Admin</span
       >

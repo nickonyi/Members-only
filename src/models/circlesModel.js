@@ -191,3 +191,17 @@ export const addMemberInDb = async ({ circleId, userId, role }) => {
 
   return mapMembership(rows[0]);
 };
+
+export const changeRoleInDB = async ({ circleId, userId, role }) => {
+  const { rows } = await pool.query(
+    `
+    UPDATE circle_members
+    SET role =$3
+    WHERE circle_id =$1 AND user_id=$2
+    RETURNING *
+    `,
+    [circleId, userId, role],
+  );
+
+  return mapMembership(rows[0]);
+};

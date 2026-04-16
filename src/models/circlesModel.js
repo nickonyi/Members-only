@@ -205,3 +205,13 @@ export const changeRoleInDB = async ({ circleId, userId, role }) => {
 
   return mapMembership(rows[0]);
 };
+
+export async function removeMemberFromDb({ circleId, userId }) {
+  const { rows } = await pool.query(
+    `DELETE FROM circle_members
+     WHERE user_id = $1 AND circle_id = $2
+     RETURNING *`,
+    [userId, circleId],
+  );
+  return mapMembership(rows[0]);
+}

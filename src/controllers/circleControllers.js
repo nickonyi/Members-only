@@ -7,6 +7,7 @@ import {
   getAllCircles,
   getCirclesOwnedByUser,
   getMembershipsInCircle,
+  removeMember,
   updateCircle,
 } from "../services/circlesService.js";
 import { getPostsByCircle } from "../services/postsService.js";
@@ -141,7 +142,7 @@ export const addMemberPost = async (req, res, next) => {
   }
 };
 
-export const changeRoleToAdminGet = async (req, res) => {
+export const changeRoleToAdminGet = async (req, res, next) => {
   try {
     await changeRole({
       circleId: Number(req.params.circleId),
@@ -149,6 +150,38 @@ export const changeRoleToAdminGet = async (req, res) => {
       actorRole: req.membership.role,
       targetUserId: Number(req.params.memberId),
       newRole: ROLES.ADMIN,
+    });
+
+    res.redirect(`/circles/${req.params.circleId}`);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const changeRoleToMemberGet = async (req, res, next) => {
+  try {
+    await changeRole({
+      circleId: Number(req.params.circleId),
+      actorUserId: req.user.id,
+      actorRole: req.membership.role,
+      targetUserId: Number(req.params.memberId),
+      newRole: ROLES.MEMBER,
+    });
+
+    res.redirect(`/circles/${req.params.circleId}`);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const removeMemberGet = async (req, res, next) => {
+  try {
+    await removeMember({
+      circleId: Number(req.params.circleId),
+      actorUserId: req.user.id,
+      actorRole: req.membership.role,
+      targetUserId: Number(req.params.memberId),
+      newRole: ROLES.MEMBER,
     });
 
     res.redirect(`/circles/${req.params.circleId}`);

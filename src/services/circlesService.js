@@ -12,6 +12,7 @@ import {
   updateCircleInDb,
   addMemberInDb,
   changeRoleInDB,
+  removeMemberFromDb,
 } from "../models/circlesModel.js";
 import { ROLES } from "../constants.js";
 import { getUserByUsernameFromDb } from "../models/usersModel.js";
@@ -111,7 +112,7 @@ export const changeRole = async ({
     throw new Error("User is not a member of this circle");
   }
 
-  if (targetMembership.role === ROLES.ADMIN) {
+  if (targetMembership.role === ROLES.OWNER) {
     throw new Error("Owner role cannot be changed");
   }
 
@@ -139,3 +140,39 @@ export const changeRole = async ({
     role: newRole,
   });
 };
+
+export async function removeMember({
+  circleId,
+  actorUserId,
+  actorRole,
+  targetUserId,
+}) {
+  const targetMembership = await getMembershipFromDb({
+    userId: targetUserId,
+    circleId,
+  });
+
+  if (!targetMembership) {
+    throw new Error("User is not a member of this circle");
+  }
+
+  // 🚫 Owner cannot remove themselves
+  if (actorRole === ROLES.OWNER && actorUserId === targetUserId) {
+    throw new Error("Owner cannot remove themselves");
+  }
+
+  // 🚫 Admin restrictions
+  if (actorRole === ROLES.ADMIN) {
+    if (targetMembership.role === ROLES.OWNER) {
+      throw new Error("Admin cannot remove owner");
+    }
+    if (targetMembership.role === ROLES.ADMIN) {
+      throw new Error("Admin cannot remove another admin");
+    }
+  }
+
+  return await removeMemberFromDb({
+    circleId,
+    userId: targetUserId,
+  });
+}

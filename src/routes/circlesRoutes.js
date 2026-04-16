@@ -2,10 +2,12 @@ import { Router } from "express";
 import {
   addMemberPost,
   changeRoleToAdminGet,
+  changeRoleToMemberGet,
   createCircleGet,
   createCirclePost,
   deleteCircleController,
   getCircles,
+  removeMemberGet,
   showCircle,
   updateCircleGet,
   updateCirclePost,
@@ -78,4 +80,21 @@ circlesRoutes.get(
   changeRoleToAdminGet,
 );
 
+circlesRoutes.get(
+  "/:circleId/members/:memberId/role/member",
+  ensureAuth,
+  loadCircle,
+  loadMembership,
+  requirePermission(canManageMembers),
+  changeRoleToMemberGet,
+);
+
+circlesRoutes.get(
+  "/:circleId/members/:memberId/remove",
+  ensureAuth,
+  loadCircle,
+  loadMembership,
+  requirePermission(canManageMembers),
+  removeMemberGet,
+);
 export default circlesRoutes;

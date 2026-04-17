@@ -181,3 +181,22 @@ export const getPostByIdFromDb = async ({ postId, viewerId = null }) => {
 
   return mapPost(rows[0]);
 };
+
+export const createPostInDb = async ({
+  circleId,
+  authorId,
+  title,
+  body,
+  visibility,
+}) => {
+  const { rows } = await pool.query(
+    `
+  INSERT INTO posts (circle_id,author_id,title,body,visibility)
+  VALUES($1,$2,$3,$4,$5)
+  RETURNING *
+  `,
+    [circleId, authorId, title, body, visibility],
+  );
+
+  return mapPost(rows[0]);
+};

@@ -6,6 +6,7 @@ import {
   getPostsByCircleFromDb,
   countVisiblePostsByCircleFromDb,
   getPostByIdFromDb,
+  createPostInDb,
 } from "../models/postsModel.js";
 import { getPagination } from "../utils/pagination.js";
 
@@ -100,4 +101,8 @@ export const getPostsByCircle = async ({
 
 export const getPostById = async ({ postId, viewerId }) => {
   return getPostByIdFromDb({ postId, viewerId });
+};
+
+export const createPost = async (data) => {
+  return createPostInDb(data);
 };

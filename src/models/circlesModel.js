@@ -136,12 +136,10 @@ export const insertOwnerAsMemberInDb = async ({ ownerId, circleId }) => {
 
 export const getCirclesUserIsMemberOfFromDb = async ({ userId }) => {
   const { rows } = await pool.query(
-    `
-    
-    SELECT c.*,cm.roles
+    `SELECT c.*,cm.role
     FROM circle_members cm
     JOIN circles c ON c.id = cm.circle_id
-    WHERE cm.circle_id = $1
+    WHERE cm.user_id = $1
     ORDER BY cm.joined_at DESC
     `,
     [userId],

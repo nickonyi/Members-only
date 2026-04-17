@@ -1,13 +1,11 @@
-<% include('../partials/header') %>
-<% include('../partials/nav') %>
+<%- include('../partials/header') %>
+<%- include('../partials/nav') %>
 <section class="py-8">
     <div class="wrapper">
 
         <h1 class="section-heading"><%= title %></h1>
 
         <div class="max-w-xs">
-
-            {{!-- ================= ERRORS ================= --}}
             <% if (errors) { %>
             <% if (errors.length) { %>
             <ul class="mb-4 text-red-600">
@@ -17,14 +15,10 @@
             </ul>
             <% } %>
             <% } %>
-            
-
-            {{!-- ================= FORM ================= --}}
+     
             <form method="POST"
                   action=""
                   class="flex flex-col gap-3">
-
-                {{!-- Title --}}
                 <label for="title">
                     <span class="block text-sm font-medium mb-1">Title</span>
                     <input type="text"
@@ -49,8 +43,6 @@
 
                     </select>
                 </div>
-
-                {{!-- Visibility --}}
                 <div>
                     <label class="block text-sm font-medium mb-1">
                         Visibility
@@ -67,8 +59,6 @@
                         </option>
                     </select>
                 </div>
-
-                {{!-- Body --}}
                 <label for="body">
                     <span class="block text-sm font-medium mb-1">Body</span>
                     <textarea name="body"
@@ -77,8 +67,6 @@
                               class="border p-2 w-full rounded"
                               required><%= formData.body %></textarea>
                 </label>
-
-                {{!-- Actions --}}
                 <div class="flex gap-3 mt-2">
                     <button type="submit"
                             class="btn-lg">
@@ -97,4 +85,4 @@
     </div>
 </section>
 
-<% include('../partials/footer') %>
+<%- include('../partials/footer') %>

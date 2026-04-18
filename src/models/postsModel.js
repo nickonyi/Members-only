@@ -164,7 +164,8 @@ export const getPostByIdFromDb = async ({ postId, viewerId = null }) => {
          ELSE u.username
          END AS author_name,
          c.name AS circle_name,
-         c.id AS circle_id
+         c.id AS circle_id,
+         (cm.user_id IS NOT NULL) AS viewer_is_member
       FROM posts p
       JOIN users u ON u.id = p.author_id
       JOIN circles c ON c.id = p.circle_id
@@ -178,6 +179,8 @@ export const getPostByIdFromDb = async ({ postId, viewerId = null }) => {
     `,
     [postId, viewerId],
   );
+
+  
 
   return mapPost(rows[0]);
 };

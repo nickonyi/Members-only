@@ -5,7 +5,7 @@ import {
   createPostGet,
   createPostPost,
 } from "../controllers/postsController.js";
-import { loadPost } from "../middlewares/loadersMiddleware.js";
+import { loadMembership, loadPost } from "../middlewares/loadersMiddleware.js";
 import { ensureAuth } from "../middlewares/authMiddleware.js";
 import { postsValidator } from "../middlewares/validators/postValidators.js";
 
@@ -18,6 +18,6 @@ postsRoutes
   .get(ensureAuth, createPostGet)
   .post(ensureAuth, postsValidator, createPostPost);
 
-postsRoutes.get("/:postId", loadPost, showPost);
+postsRoutes.get("/:postId", loadPost, loadMembership, showPost);
 
 export default postsRoutes;

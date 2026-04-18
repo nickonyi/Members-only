@@ -8,10 +8,10 @@ import {
 import AppError from "../utils/appError.js";
 
 export const getPosts = async (req, res) => {
-  const userId = req?.query?.id ?? null;
+  const userId = req.query?.id ?? null;
 
   const ownedPostPage = parseInt(req.query.ownedPostPage) || 1;
-  const allPostPages = parseInt(req.query.allPostPages) || 1;
+  const allPostPages = parseInt(req.query.allPostsPage) || 1;
 
   const [
     { posts: allPosts, pagination: allPostsPagination },
@@ -31,8 +31,6 @@ export const getPosts = async (req, res) => {
 };
 
 export const showPost = (req, res) => {
-  console.log(req.post);
-
   res.render("posts/details", {
     title: req.post.title,
     post: req.post,

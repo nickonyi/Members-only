@@ -50,7 +50,7 @@ export const loadPost = async (req, res, next) => {
   if (post.visibility === "members_only" && !post.viewerIsMember) {
     return next(
       new AppError(
-        "This post is only visible to members only",
+        "This post izs only visible to members only",
         403,
         req.originalUrl,
       ),

@@ -107,14 +107,19 @@ export const getMembershipsInCircleFromDb = async ({ circleId }) => {
   return rows.map(mapMembership);
 };
 
-export const createCircleInDb = async ({ name, description, ownerId }) => {
+export const createCircleInDb = async ({
+  name,
+  description,
+  ownerId,
+  code,
+}) => {
   const { rows } = await pool.query(
     `
-    INSERT INTO circles(name,description,owner_id) 
-    VALUES ($1,$2,$3)
+    INSERT INTO circles(name,description,owner_id,secret_code) 
+    VALUES ($1,$2,$3,$4)
     RETURNING *  
   `,
-    [name, description, ownerId],
+    [name, description, ownerId, code],
   );
 
   return mapCircle(rows[0]);

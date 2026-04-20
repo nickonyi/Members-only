@@ -1,10 +1,12 @@
 import { ROLES } from "../constants.js";
 import {
   addMemberByUsername,
+  addUserToCircle,
   changeRole,
   createCircle,
   deleteCircleService,
   getAllCircles,
+  getCircleById,
   getCirclesOwnedByUser,
   getMembershipsInCircle,
   removeMember,
@@ -81,9 +83,9 @@ export const createCirclePost = async (req, res) => {
     });
   }
 
-  const { name, description } = matchedData(req);
+  const { name, description, code } = matchedData(req);
 
-  await createCircle({ name, description, ownerId: req.user.id });
+  await createCircle({ name, description, ownerId: req.user.id, code });
 
   res.redirect("/circles");
 };
@@ -185,6 +187,23 @@ export const removeMemberGet = async (req, res, next) => {
     });
 
     res.redirect(`/circles/${req.params.circleId}`);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const joinCircle = async (req, res, next) => {
+  try {
+    const { code } = req.body;
+
+    const circle = await getCircleById(req.params.id);
+
+    if (code !== circle.secret_code) {
+      alert("wrong code!");
+    }
+
+    await addUserToCircle(req.user.id, circle.id);
+    res.redirect(`/circles/${circle.id}`);
   } catch (err) {
     next(err);
   }

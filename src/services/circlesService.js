@@ -41,8 +41,8 @@ export const getMembershipsInCircle = async (circleId) => {
   return getMembershipsInCircleFromDb({ circleId });
 };
 
-export const createCircle = async ({ name, description, ownerId }) => {
-  const circle = await createCircleInDb({ name, description, ownerId });
+export const createCircle = async ({ name, description, ownerId, code }) => {
+  const circle = await createCircleInDb({ name, description, ownerId, code });
 
   await insertOwnerAsMemberInDb({
     ownerId,
@@ -94,6 +94,10 @@ export const addMemberByUsername = async ({
   }
 
   return await addMemberInDb({ circleId, userId: user.id, role: ROLES.MEMBER });
+};
+
+export const addUserToCircle = async (userId, circleId) => {
+  return await addMemberInDb({ userId, circleId, role: ROLES.MEMBER });
 };
 
 export const changeRole = async ({

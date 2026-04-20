@@ -7,6 +7,7 @@ import {
   createCirclePost,
   deleteCircleController,
   getCircles,
+  joinCircle,
   removeMemberGet,
   showCircle,
   updateCircleGet,
@@ -34,6 +35,8 @@ circlesRoutes
   .post(ensureAuth, circleValidator, createCirclePost);
 
 circlesRoutes.get("/:circleId", loadCircle, loadMembership, showCircle);
+
+circlesRoutes.get("/:id/join", ensureAuth, joinCircle);
 
 circlesRoutes
   .route("/:circleId/update")

@@ -13,4 +13,10 @@ export const circleValidator = [
     .withMessage("Description is required")
     .isLength({ min: 10 })
     .withMessage("Description should not be less than 10 characters"),
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Code is required")
+    .isLength({ max: 10 })
+    .withMessage("Secret code should not be more than 10 characters"),
 ];

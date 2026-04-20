@@ -85,10 +85,7 @@
       Join this circle to access member-only posts and discussions.
     </p>
 
-    <a href="/circles/<%= circle.id %>/join"
-       class="btn inline-block mt-2 transition">
-      Join Circle
-    </a>
+    <button id="open-join-modal" class="btn mt-2">Join Circle</button>
 
     <hr class="my-4 text-gray-400">
 
@@ -150,4 +147,28 @@ POSTS SECTION
 
   </div>
 </section>
+
+<div id="join-modal" class="fixed inset-0 z-50  bg-black/50 hidden items-center justify-center">
+  <div class="bg-white p-6 rounded-lg w-80">
+    <h3 class="text-lg font-semibold mb-4">Enter secret code</h3>
+    <form action="/circles/<%= circle.id %>/join" method="post">
+         <input 
+        type="text" 
+        name="secretCode"
+        class="input border border-gray-700 rounded-md p-1 w-full"
+        placeholder="Secret code"
+        required
+      />
+       
+      <div class="flex justify-end mt-4 gap-2">
+        <button type="button" id="close-modal" class="btn bg-gray-300 text-black">
+          Cancel
+        </button>
+        <button type="submit" class="btn bg-rose-600">
+          Join
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 <%- include('../partials/footer') %>

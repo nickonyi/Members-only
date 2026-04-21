@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch  ./src/app",
+    "start": "node ./src/app.js",
     "tailwind": "npx tailwindcss -i ./src/styles/index.css -o ./public/css/style.css --watch "
   },
   "repository": {

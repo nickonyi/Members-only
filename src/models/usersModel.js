@@ -10,7 +10,7 @@ const mapUser = (row) => {
   return {
     id: row.id,
     username: row.username,
-    passwordHash: row.password,
+    passwordHash: row.password_hash,
     createdAt: row.created_at,
   };
 };

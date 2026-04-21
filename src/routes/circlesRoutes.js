@@ -36,7 +36,7 @@ circlesRoutes
 
 circlesRoutes.get("/:circleId", loadCircle, loadMembership, showCircle);
 
-circlesRoutes.get("/:id/join", ensureAuth, joinCircle);
+circlesRoutes.post("/:id/join", ensureAuth, joinCircle);
 
 circlesRoutes
   .route("/:circleId/update")

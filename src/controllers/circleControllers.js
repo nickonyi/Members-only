@@ -194,12 +194,14 @@ export const removeMemberGet = async (req, res, next) => {
 
 export const joinCircle = async (req, res, next) => {
   try {
-    const { code } = req.body;
+    const { secretCode } = req.body;
 
     const circle = await getCircleById(req.params.id);
 
-    if (code !== circle.secret_code) {
-      alert("wrong code!");
+    if (secretCode !== circle.secretCode) {
+      const err = new Error("The code is incorrect!");
+      err.status = 400;
+      return next(err);
     }
 
     await addUserToCircle(req.user.id, circle.id);

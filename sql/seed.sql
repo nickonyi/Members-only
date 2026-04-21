@@ -1,25 +1,25 @@
 -- =====================
 -- USERS
 -- =====================
-INSERT INTO users (username, password_hash) VALUES
-('alice', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
-('bob', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
-('charlie', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
-('diana', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
-('eric',  '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
-('fiona', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
-('george','$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.');
+INSERT INTO users (first_name, last_name, email, username, password_hash) VALUES
+('Alice', 'Smith', 'alice.smith@example.com', 'alicesm30', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
+('Bob', 'Johnson', 'bob.johnson@example.com', 'bobjo45', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
+('Charlie', 'Brown', 'charlie.brown@example.com', 'charliebr23', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
+('Diana', 'Wilson', 'diana.wilson@example.com', 'dianawil34', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
+('Eric', 'Davis', 'eric.davis@example.com', 'ericda56', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
+('Fiona', 'Miller', 'fiona.miller@example.com', 'fionamil98', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.'),
+('George', 'Moore', 'george.moore@example.com', 'georgemo32', '$2a$12$XE2GPxm4oBojKhTNOznjwu6bTOBD/LESR1OUrPmP2b8V5dPZsBNM.');
 
 -- =====================
 -- CIRCLES
 -- =====================
-INSERT INTO circles (name, owner_id, description) VALUES
-('Code & Chill',        1, 'Late-night debugging, random ideas, and pretending console.log fixes everything.'),
-('Startup Minds',       2, 'For future founders, dreamers, and people building things that may or may not work.'),
-('Music Vibes',         3, 'Sharing playlists, discovering new sounds, and arguing about who ruined music.'),
-('Gamers Hub',          4, 'For casual gamers, try-hards, and people who say “one last game” 5 times.'),
-('Foodies Corner',     5, 'Exploring good food, bad cooking experiments, and everything in between.'),
-('Campus Life',        6, 'University struggles, wins, and everything in between.');
+INSERT INTO circles (name, owner_id, description, secret_code) VALUES
+('Code & Chill',        1, 'Late-night debugging, random ideas, and pretending console.log fixes everything.', 'codechill'),
+('Startup Minds',       2, 'For future founders, dreamers, and people building things that may or may not work.', 'startupminds'),
+('Music Vibes',         3, 'Sharing playlists, discovering new sounds, and arguing about who ruined music.', 'musicvibes'),
+('Gamers Hub',          4, 'For casual gamers, try-hards, and people who say “one last game” 5 times.', 'gamershub'),
+('Foodies Corner',     5, 'Exploring good food, bad cooking experiments, and everything in between.', 'foodiescorner'),
+('Campus Life',        6, 'University struggles, wins, and everything in between.', 'campuslife');
 -- =====================
 -- CIRCLE MEMBERS
 -- =====================

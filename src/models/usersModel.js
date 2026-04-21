@@ -24,7 +24,7 @@ export const createUserInDB = async ({
 }) => {
   const result = await pool.query(
     `
-    INSERT INTO users(first_name,last_name,email,password,username) 
+    INSERT INTO users(first_name,last_name,email,password_hash,username) 
     values($1,$2,$3,$4,$5)
     RETURNING *
     `,
